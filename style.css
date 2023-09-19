@@ -10,3 +10,7 @@ html,body{
     width: 100%;
 }
 
+body{
+    background-color: rgb(145, 167, 183) !important;
+}
+
