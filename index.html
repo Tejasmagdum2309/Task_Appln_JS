@@ -15,7 +15,7 @@
     <title>Task Application</title>
 </head>
 
-<body>
+<body onload="LoadData()">
     <!-- Modal -->
 <div class="modal fade" id="addNewItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -27,32 +27,32 @@
         <div class="modal-body">
             <!-- img -->
             <div class="form-group mb-2">
-                <label for="img" class="mb-1">Image URL</label>
-                <input type="url" class="form-control" id="imgurl" placeholder="http://example.com/image.img">
+                <label for="imgurl" class="mb-1">Image URL</label>
+                <input type="url" class="form-control modal_img" id="imgurl" placeholder="http://example.com/image.img">
                 <small id="imgurl" class="form-text text-muted">Optional field ....</small>
             </div>
            <!-- name -->
            <div class="form-group mb-2">
-            <label for="name" class="mb-1">Title</label>
-            <input type="text" class="form-control" id="title" placeholder="title">
+            <label for="title" class="mb-1">Title</label>
+            <input type="text" class="form-control modal_title" id="title" placeholder="title">
            </div>
 
            <!-- price -->
            <div class="form-group mb-2">
             <label for="price" class="mb-1">Price</label>
-            <input type="text" class="form-control" id="price" placeholder="$$$$">
+            <input type="text" class="form-control modal_price" id="price" placeholder="$$$$">
            </div>
 
            <!-- desc -->
            <div class="form-group">
             <label for="desc">Desc </label>
-            <textarea class="form-control" id="desc" rows="3"></textarea>
+            <textarea class="form-control modal_desc" id="desc" rows="3"></textarea>
           </div>
 
         </div>
         <div class="modal-footer justify-content-start">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" onclick="addItem()">Save changes</button>
         </div>
       </div>
     </div>
@@ -101,8 +101,8 @@
         </section>
 
         <!-- Card Setion -->
-        <section>
-
+        <section class="mt-5 task__card d-flex flex-wrap align-content-center justify-content-center gap-4">
+           
         </section>
 
     </div>
