@@ -5,16 +5,17 @@ let state = {
 };
 
 let card = document.querySelector(".task__card");
+let modal =  document.querySelector(".taskmodal");
 
 
 
 // Template for the card on screen
 const htmltaskcard = ({id,imgurl,title,price,desc})=> `
-<div class="col-md-3 col-sm-6 id=${id}>
+<div class="col-md-3 col-sm-6 id=${id}  >
 <div class="card text-dark bg-light border-light h-100">
   <div class="card-header d-flex justify-content-end gap-2">
-     <button class="btn btn-outline-primary"><i class="fa-regular fa-pen-to-square"></i></button>
-     <button class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+     <button class="btn btn-outline-primary" id=${id} onclick="upd(this)"><i class="fa-regular fa-pen-to-square"></i></button>
+     <button class="btn btn-outline-danger" id=${id}  onclick="del(this)"><i class="fa-solid fa-trash"></i></button>
   </div>
   <div class="card-body">
     ${     
@@ -29,11 +30,28 @@ const htmltaskcard = ({id,imgurl,title,price,desc})=> `
   </div>
 
   <div class="card-footer">
-          <button class="btn btn-primary">Open It</button>
+          <button class="btn btn-primary " id=${id}   data-bs-toggle="modal" data-bs-target="#taskModal" onclick="modalop(this)"   >Open It</button>
   </div>
 </div>
 </div>   
 `;
+
+const htmltaskmodal = ({id,imgurl,title,price,desc})=>
+      `
+      <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">${title}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" class="taskModal">
+              ...
+            </div>
+            <div class="modal-footer">
+              
+            </div>
+          </div>
+      `;
+
 
 function updateStorage(){
        localStorage.setItem(
@@ -72,10 +90,33 @@ const addItem = ()=>{
     document.querySelector(".modal_title").value =" ";
     document.querySelector(".modal_price").value = " ";
     document.querySelector(".modal_desc").value = " ";
-    state.tasklist.pop();
+    // state.tasklist.pop();
 
 }
 
-const del = ()=>{
-    
+
+const del = (e)=>{
+      let n =state.tasklist.find(each => each.id == e.id);
+      
+      // console.log(state.tasklist);
+
+      let n1 = state.tasklist.filter((each)=> each != n);
+      state.tasklist = n1;
+      // console.log(state.tasklist);
+      updateStorage();
+      card.innerHTML = " ";
+      LoadData();
+}
+
+const upd = (e)=>{
+   
+  
+       
+
+}
+
+// to open a modal 
+const modalop = (e)=>{
+     let n = state.tasklist.find(each => each.id == e.id);
+     modal.innerHTML = htmltaskmodal(n);
 }

@@ -15,9 +15,18 @@
     <title>Task Application</title>
 </head>
 
-<body onload="LoadData()">
-    <!-- Modal -->
-<div class="modal fade" id="addNewItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<body onload="LoadData()" >
+
+    <!-- (see task ) Modal -->
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg taskmodal">
+          
+        </div>
+      </div>
+
+
+    <!-- (add new Task) Modal -->
+<div class="modal fade" id="addNewItem" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
