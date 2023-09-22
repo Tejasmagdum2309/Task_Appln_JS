@@ -11,10 +11,10 @@ let modal =  document.querySelector(".taskmodal");
 
 // Template for the card on screen
 const htmltaskcard = ({id,imgurl,title,price,desc})=> `
-<div class="col-md-3 col-sm-6 id=${id}  >
+<div class="col-md-3 col-sm-6" id=${id}  >
 <div class="card text-dark bg-light border-light h-100">
   <div class="card-header d-flex justify-content-end gap-2">
-     <button class="btn btn-outline-primary" id=${id} onclick="upd(this)"><i class="fa-regular fa-pen-to-square"></i></button>
+     <button class="btn btn-outline-primary" id=${id} onclick="updateCard(this)"><i class="fa-regular fa-pen-to-square"></i></button>
      <button class="btn btn-outline-danger" id=${id}  onclick="del(this)"><i class="fa-solid fa-trash"></i></button>
   </div>
   <div class="card-body">
@@ -24,8 +24,8 @@ const htmltaskcard = ({id,imgurl,title,price,desc})=> `
            :`<img src="https://tse1.mm.bing.net/th?id=OIP.F00dCf4bXxX0J-qEEf4qIQHaD6&pid=Api&rs=1&c=1&qlt=95&w=223&h=117" class="card-img-top" alt="...">`
 }
      <h5 class="card-title">${title}</h5>
-     <h5 class="card-text text-muted">${price}$</h5>
-     <p class="card-text " >${desc}</p>
+     <div class="d-flex align-item-center" ><h5 class="card-text text-muted">${price}</h5></div>
+     <p class="description  text-sm"  >${desc}</p>
 
   </div>
 
@@ -44,7 +44,22 @@ const htmltaskmodal = ({id,imgurl,title,price,desc})=>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" class="taskModal">
-              ...
+              <div>
+
+              ${     
+                (imgurl) ?
+                  `<img src=${imgurl} class="card-img-top" alt="...">`
+                  :`<img src="https://tse1.mm.bing.net/th?id=OIP.F00dCf4bXxX0J-qEEf4qIQHaD6&pid=Api&rs=1&c=1&qlt=95&w=223&h=117" class="card-img-top" alt="...">`
+              }</div>
+
+              <div>
+              <p class="text-muted text-sm">Created on : ${Date(id).toString()}</p>
+
+              <div class="d-flex"><p>Price : ${price}</p></div>
+
+              <p class="text-muted">${desc}</p>
+              </div>
+
             </div>
             <div class="modal-footer">
               
@@ -108,15 +123,89 @@ const del = (e)=>{
       LoadData();
 }
 
-const upd = (e)=>{
-   
-  
-       
-
-}
 
 // to open a modal 
 const modalop = (e)=>{
      let n = state.tasklist.find(each => each.id == e.id);
      modal.innerHTML = htmltaskmodal(n);
+}
+
+
+// update card
+
+const updateCard = (e)=>{
+    let parent = e.parentNode.parentNode.parentNode;
+    // console.log(parent.id);
+    let title = parent.childNodes[1].childNodes[3].childNodes[3];
+    let price = parent.childNodes[1].childNodes[3].childNodes[5];
+    let desc = parent.childNodes[1].childNodes[3].childNodes[7];
+    let btn = parent.childNodes[1].childNodes[5].childNodes[1];
+
+    // data-bs-toggle="modal" data-bs-target="#taskModal"
+
+    btn.removeAttribute("data-bs-toggle");
+    btn.removeAttribute("data-bs-target");
+
+    btn.setAttribute("onclick","saveit(this)");
+
+    title.setAttribute("contenteditable","true");
+    price.setAttribute("contenteditable","true");
+    desc.setAttribute("contenteditable","true");
+
+    btn.innerText = "Save It";
+
+    
+
+}
+
+
+const saveit = (e)=>{
+      let id = e.id;
+      let title;
+      let price;
+      let desc;
+      let p = e.parentNode.parentNode;
+      let obj = {
+      title : p.childNodes[3].childNodes[3].innerText,
+      price : p.childNodes[3].childNodes[5].innerText,
+      desc : p.childNodes[3].childNodes[7].innerText,
+    }
+
+      let n = state.tasklist.find(each => each.id == id);
+     
+
+     
+      let n1 = state.tasklist.filter((each)=> each != n);
+      state.tasklist = n1;
+
+      n = {...n,...obj};
+
+      state.tasklist.push(n);
+
+      updateStorage();
+
+      e.innerHTML = "Open It";
+      e.setAttribute("data-bs-toggle","modal");
+      e.setAttribute("data-bs-target","#taskModal");
+     
+      e.setAttribute("onclick","modalop(this)");
+
+
+      p.childNodes[3].childNodes[3].setAttribute("contenteditable","false");
+      p.childNodes[3].childNodes[5].setAttribute("contenteditable","false");
+      p.childNodes[3].childNodes[7].setAttribute("contenteditable","false");
+
+}
+
+
+const search = (e)=>{
+    while(card.firstChild){
+      card.removeChild(card.firstChild)
+    }
+
+    const res = state.tasklist.filter(({title}) =>
+       title.toLowerCase().includes(e.value.toLowerCase()) 
+    )
+
+    res.map((each)=> card.insertAdjacentHTML("beforeend",htmltaskcard(each)));
 }
