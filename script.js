@@ -20,7 +20,7 @@ const htmltaskcard = ({id,imgurl,title,price,desc})=> `
   <div class="card-body">
     ${     
          (imgurl) ?
-           `<img src=${imgurl} class="card-img-top" alt="...">`
+           `<img src=${imgurl}  class="card-img-top" alt="...">`
            :`<img src="https://tse1.mm.bing.net/th?id=OIP.F00dCf4bXxX0J-qEEf4qIQHaD6&pid=Api&rs=1&c=1&qlt=95&w=223&h=117" class="card-img-top" alt="...">`
 }
      <h5 class="card-title">${title}</h5>
@@ -94,6 +94,11 @@ const addItem = ()=>{
     let desc = document.querySelector(".modal_desc").value;
 
     // console.log(imgurl.value + " " + title.value + " " +price.value + " " +desc.value );
+    if(title ===""|| price=="" || desc === ""){
+      alert("fill form correctely...");
+    }
+    else{ 
+    console.log("added")
 
     state.tasklist.push({id,imgurl,title,price,desc});
     
@@ -101,11 +106,13 @@ const addItem = ()=>{
     card.innerHTML = " ";
     LoadData();
 
-    document.querySelector(".modal_img").value = " ";
-    document.querySelector(".modal_title").value =" ";
-    document.querySelector(".modal_price").value = " ";
-    document.querySelector(".modal_desc").value = " ";
+    document.querySelector(".modal_img").value = "";
+    document.querySelector(".modal_title").value ="";
+    document.querySelector(".modal_price").value = "";
+    document.querySelector(".modal_desc").value = "";
     // state.tasklist.pop();
+}
+
 
 }
 

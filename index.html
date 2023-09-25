@@ -27,6 +27,7 @@
 
     <!-- (add new Task) Modal -->
 <div class="modal fade" id="addNewItem" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form action="">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -43,19 +44,19 @@
            <!-- name -->
            <div class="form-group mb-2">
             <label for="title" class="mb-1">Title</label>
-            <input type="text" class="form-control modal_title" id="title" placeholder="title">
+            <input type="text" class="form-control modal_title" id="title" placeholder="title" required>
            </div>
 
            <!-- price -->
            <div class="form-group mb-2">
             <label for="price" class="mb-1">Price</label>
-            <input type="text" class="form-control modal_price" id="price" placeholder="$$$$">
+            <input type="text" class="form-control modal_price" id="price" placeholder="$$$$" required>
            </div>
 
            <!-- desc -->
            <div class="form-group">
             <label for="desc">Desc </label>
-            <textarea class="form-control modal_desc" id="desc" rows="3" ></textarea>
+            <textarea class="form-control modal_desc" id="desc" rows="3" required></textarea>
           </div>
 
         </div>
@@ -64,7 +65,7 @@
           <button type="button" class="btn btn-primary" onclick="addItem()">Save changes</button>
         </div>
       </div>
-    </div>
+    </div></form>
   </div>
 
     <!-- navbar -->
